@@ -1,3 +1,14 @@
+# Project Layout
+default_archive/
+test_workspace/
+csv/
+
+# Editor
+*.vim
+tags
+
+
+# Below comes from the Github template
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

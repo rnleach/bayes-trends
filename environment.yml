@@ -1,0 +1,12 @@
+name: PyMC
+channels:
+  - conda-forge
+dependencies:
+  - arviz
+  - jupyter
+  - matplotlib
+  - numpy
+  - pandas
+  - pymc>=4
+  - requests
+  - scipy
