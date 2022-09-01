@@ -1,15 +1,12 @@
-################################################################################
-# archive.py - An archive of point observations.
-#
-# This file is a library to serve as an interface to a group of sqlite3 files
-# storing forecast and observation data.
-#
-# Client programs will download and import observations, or query that data for
-# plotting or verification.
-#
-# Author: Ryan Leach, WFO MSO.
-#
-################################################################################
+"""An archive of point observations.
+
+ This file is a library to serve as an interface to a group of sqlite3 files
+ storing forecast and observation data.
+
+ Client programs will download and import observations, or query that data for
+ plotting or verification.
+
+"""
 from datetime import datetime, date, timedelta
 from pathlib import Path
 import sqlite3
