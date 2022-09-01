@@ -151,3 +151,29 @@ def get_monthly_average_vpd(archive, site, months, starting=None, ending=None, b
     return
 
 
+def normalize_var(df, input_col, output_col):
+    """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
+
+    Normalize means subtract the mean and then divide by the standard deviation.
+
+    # Arguments
+    df - the Pandas DataFrame
+    input_col - The name of the column in df to be normalized.
+    output_col - The name of the column to add back to the DataFrame df with the normalized data.
+
+    # Returns a tuple of two functions. The first is a function that can normalize new data values
+    and the second is a function that can denormalize data values.
+    """
+    offset = df[input_col].mean()
+    scale = df[input_col].std()
+    
+    print(f"\n{input_col} offset = {offset} scale = {scale}\n")
+    
+    df[output_col] = (df[input_col] - offset) / scale
+    
+    def denorm(x):
+        return x * scale + offset
+    def norm(x):
+        return (x - offset) / scale
+    
+    return (norm, denorm)
