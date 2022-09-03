@@ -7,8 +7,16 @@ import archive
 
 def build_row_converter(cols):
 
-    stn_idx, id_idx, date_idx = cols.index('STATION'), cols.index('CALL_SIGN'), cols.index('DATE')
-    tmp_idx, dew_idx = cols.index('TMP'), cols.index('DEW')
+    stn_idx = cols.index('STATION')
+    id_idx = cols.index('CALL_SIGN')
+    date_idx = cols.index('DATE')
+    tmp_idx = cols.index('TMP')
+    dew_idx = cols.index('DEW')
+
+    try:
+        pres_idx = cols.index('MA1')
+    except ValueError:
+        pres_idx = None
 
     def converter(row):
         try:
@@ -29,16 +37,26 @@ def build_row_converter(cols):
 
             vt = datetime.datetime.strptime(vt, "%Y-%m-%dT%H:%M:%S")
 
-            tmp = tmp.replace(',', '.')
-            dew = dew.replace(',', '.')
+            tmp = tmp.split(',')[0]
+            dew = dew.split(',')[0]
 
             tmp = float(tmp) / 10
             dew = float(dew) / 10
 
-            #tmp = c_to_f(tmp)
-            #dew = c_to_f(dew)
+            if pres_idx is not None:
+                pres = row[pres_idx].strip()
+                if pres == '':
+                    pres = None
+                else:
+                    pres = pres.split(',')[2]
+                    if '9999' in pres:
+                        pres = None
+                    else:
+                        pres = float(pres) / 10
+            else:
+                pres = None
 
-            return (stn_num, stn_id, vt, tmp, dew)
+            return (stn_num, stn_id, vt, tmp, dew, pres)
 
         except ValueError:
             return None
@@ -64,11 +82,11 @@ def round_to_hour(vt):
 
 def aggregate(it):
     current = next(it)
-    curr_stn_num, curr_stn_id, curr_vt, curr_tmp, curr_dew = current
+    curr_stn_num, curr_stn_id, curr_vt, curr_tmp, curr_dew, curr_pres = current
     curr_rounded, curr_change = round_to_hour(curr_vt)
 
     for next_ in it:
-        next_stn_num, next_stn_id, next_vt, next_tmp, next_dew = next_
+        next_stn_num, next_stn_id, next_vt, next_tmp, next_dew, next_pres = next_
         next_rounded, next_change = round_to_hour(next_vt)
 
         if next_rounded > curr_rounded:
@@ -102,16 +120,16 @@ for fname in csv_files:
         data = (convert_row(r) for r in csvreader)
         data = (r for r in data if r is not None)
         data = aggregate(data)
-        data = ((stn_id, vt, tmp, calc_rh(tmp, dew)) for _, stn_id, vt, tmp, dew in data)
+        data = ((stn_id, vt, tmp, dew, pres) for _, stn_id, vt, tmp, dew, pres in data)
         
-        for stn, vt, tmp, rh in data:
+        for stn, vt, tmp, dew, pres in data:
 
             # Detect some known errors.
             if stn == '99999' or stn == 'ks80':
                 error_list.append((fname, vt, stn))
                 continue
 
-            ar.add_update_observation(stn, vt, tmp, rh)
+            ar.add_update_observation(stn, vt, tmp, dew, pres)
 
 if len(error_list) > 0:
     print("\n\n     ***** Errors *****")

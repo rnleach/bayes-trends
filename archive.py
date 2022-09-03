@@ -1,7 +1,6 @@
 """An archive of point observations.
 
- This file is a library to serve as an interface to a group of sqlite3 files
- storing forecast and observation data.
+ This file is a library to serve as an interface to an sqlite3 file storing observation data.
 
  Client programs will download and import observations, or query that data for
  plotting or verification.
@@ -56,8 +55,9 @@ class Archive:
                 CREATE TABLE IF NOT EXISTS obs(
                     site_id     TEXT      NOT NULL, -- e.g. kmso, kgpi
                     valid_time  TIMESTAMP NOT NULL,
-                    temperature INTEGER   NOT NULL, -- Temperature in C.
-                    rh          INTEGER   NOT NULL, -- value 0 to 100
+                    temperature REAL      NOT NULL, -- Temperature in C.
+                    dew         REAL      NOT NULL, -- Dew Point in C.
+                    pres        REAL,               -- Pressure in hPa
                     UNIQUE (site_id, valid_time)
                 );
             """)
@@ -71,7 +71,7 @@ class Archive:
         self.db_conn.commit()
         self.db_conn.close()
 
-    def add_update_observation(self, site, valid_time, temperature, humidity):
+    def add_update_observation(self, site, valid_time, temperature, dew_point, pressure=None):
         """Add an observation to the archive.
 
         The valid_time of the observation is rounded to the nearest hour
@@ -81,20 +81,17 @@ class Archive:
         site -- a string with the site id: e.g. kmso. Case insensitive.
         valid_time -- a datetime.datetime object.
         temperature -- The temperature in C.
-        humidity -- The relative humidity in percent, 0-100.0
+        dew_point -- The dew point in C.
+        pressure -- the pressure in hPa
         """
         site = site.lower()
         assert isinstance(valid_time, datetime)
 
-        if temperature is None or humidity is None:
+        if temperature is None or dew_point is None:
             return
         
-        temperature = int(round(temperature))
-        humidity = int(round(humidity))
-
-        assert humidity >= 0
-        if humidity > 100:
-            print(f"Humidity > 100: {site} {valid_time} {temperature}F {humidity}%")
+        if dew_point > temperature:
+            print(f"Humidity > 100: {site} {valid_time} {temperature}C / {dew_point}C")
 
         if valid_time.minute <= 30:
             vtime = valid_time - timedelta(minutes=valid_time.minute)
@@ -102,12 +99,12 @@ class Archive:
             vtime = valid_time + timedelta(minutes=60 - valid_time.minute)
 
         self.db_conn.execute(
-            "INSERT OR REPLACE INTO obs (site_id, valid_time, temperature, rh) VALUES (?, ?, ?, ?)",
-                (site, vtime, temperature, humidity))
+            "INSERT OR REPLACE INTO obs (site_id, valid_time, temperature, dew, pres) VALUES (?, ?, ?, ?, ?)",
+                (site, vtime, temperature, dew_point, pressure))
         return
 
-    def get_hourly_temp_rh_for(self, site, starting=None, ending=None):
-        """Get hourly temperature and humidity data in a time range.
+    def get_hourly_data_for(self, site, starting=None, ending=None):
+        """Get hourly temperature, dew point, and pressure data in a time range.
 
         # Arguments
         site - the site id, e.g. 'kmso', 'kgeg'
@@ -120,7 +117,7 @@ class Archive:
 
 
         # Returns a generator object that yields tuples of 
-        (site, valid time, temperature in C, relative humidity 0-100)
+        (site, valid time, temperature in C, dew point in C, pressure in hPa)
         """
 
         if starting is not None:
@@ -139,7 +136,8 @@ class Archive:
                 site_id,
                 datetime(valid_time) as vt,
                 temperature,
-                rh
+                dew,
+                pres
             FROM obs
             """
 
@@ -168,10 +166,12 @@ class Archive:
             site = row[0]
             vt = string_to_datetime(row[1])
             temperature = row[2]
-            rh = row[3]
+            dew = row[3]
+            pres = row[4]
 
-            if site is not None and vt is not None and temperature is not None and rh is not None:
-                return (site, vt, temperature, rh)
+            if site is not None and vt is not None and temperature is not None and dew is not None:
+                # Note that pres may be None at this point.
+                return (site, vt, temperature, dew, pres)
             else:
                 return None
 
@@ -199,8 +199,8 @@ if __name__ == "__main__":
 
     with Archive(root=test_root) as arch:
         print("Second Instance\n")
-        arch.add_update_observation("kmso", datetime(2020, 7, 15, 0, 25), 70, 8)
-        arch.add_update_observation("kmso", datetime(2020, 7, 15, 1, 25), 70, 15)
+        arch.add_update_observation("kmso", datetime(2020, 7, 15, 0, 25), 70, 8, 800)
+        arch.add_update_observation("kmso", datetime(2020, 7, 15, 1, 25), 70, 15, 800)
         arch.add_update_observation("kmso", datetime(2020, 7, 15, 2, 25), 70, 20)
         arch.add_update_observation("kmso", datetime(2020, 7, 15, 3, 25), 70, 25)
         arch.add_update_observation("kmso", datetime(2020, 7, 15, 4, 25), 70, 30)
@@ -248,7 +248,7 @@ if __name__ == "__main__":
         arch.add_update_observation("kmso", datetime(2020, 7, 16, 22, 25), 70, 11)
         arch.add_update_observation("kmso", datetime(2020, 7, 16, 23, 25), 70, 9)
 
-        vals = arch.get_hourly_temp_rh_for('kmso')
+        vals = arch.get_hourly_data_for('kmso')
         for r in vals:
             print(r)
 
