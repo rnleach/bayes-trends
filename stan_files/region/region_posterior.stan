@@ -15,29 +15,26 @@ data {
   array[N] real<lower=0> vpd;           // The scaled (proportional to mean) vapor pressure deficit.
 }
 parameters {
-  real<lower=0> a_mu;
+  real a_mu;
   real<lower=0> a_sigma;
   real by_mu;
   real<lower=0> by_sigma;
   real<lower=0> sigma_lam;
 
-  array[K] real<lower=0> a; // per site intercept
-  array[K] real by;         // per site slope
-  array[K] real<lower=0> sigma; // per site variability
+  array[K] real a;                      // per site intercept
+  array[K] real by;                     // per site slope
+  array[K] real<lower=0> sigma;         // per site variability
 }
 model {
-  a_mu ~ gamma(0.5, 1.0);           // The mean of the vapor pressure deficit data set should be 1
+  a_mu ~ normal(0.0, 0.5);          // The mean of the vapor pressure deficit data set should be 1
   a_sigma ~ exponential(1.0);
   by_mu ~ normal(0.0, 0.6);         // The slope of the year term.
   by_sigma ~ exponential(1.0);
   sigma_lam ~ exponential(1.0);
 
   {
-    real a_betap = a_mu / a_sigma^2;
-    real a_alpha = a_mu * a_betap;
-
     for (k in 1:K) {
-      a[k] ~ gamma(a_alpha, a_betap);
+      a[k] ~ normal(a_mu, a_sigma);
       by[k] ~ normal(by_mu, by_sigma);
       sigma[k] ~ exponential(sigma_lam);
     }

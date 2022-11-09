@@ -12,7 +12,7 @@ data {
   array[N] real year;    // The year, normalized to mean=0 and std=1
 }
 generated quantities {
-  real a = gamma_rng(0.5, 1.0);     // The mean of the vapor pressure deficit data set should be 1
+  real a = normal_rng(0.0, 0.5);    // The mean of the vapor pressure deficit data set should be 1
   real by = normal_rng(0.0, 0.6);   // The slope of the year term.
   real<lower=0> sigma = exponential_rng(1.0);
 
