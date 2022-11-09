@@ -1,7 +1,16 @@
 # Project Layout
 default_archive/
+intermediate_data/
 test_workspace/
 csv/
+
+# Ignore transpiled and compiled stan models
+stan_files/missoula/*.hpp
+stan_files/missoula/missoula_posterior
+stan_files/missoula/missoula_prior
+stan_files/region/*.hpp
+stan_files/region/region_posterior
+stan_files/region/region_prior
 
 # Editor
 *.vim

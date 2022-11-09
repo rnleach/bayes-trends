@@ -1,12 +1,18 @@
-name: PyMC
+name: BayesTrends
 channels:
   - conda-forge
 dependencies:
-  - arviz
+  - cartopy
+  - arviz>=0.13.0 # Install with PiP if not available on Anaconda
   - jupyter
   - matplotlib
   - numpy
   - pandas
-  - pymc>=4
+  - patsy
+  - cmdstanpy
   - requests
   - scipy
+  - tqdm
+  - watermark
+  - xarray
+
