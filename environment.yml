@@ -4,7 +4,7 @@ channels:
 dependencies:
   - cartopy
   - arviz>=0.13.0 # Install with PiP if not available on Anaconda
-  - jupyter
+  - jupyterlab
   - matplotlib
   - numpy
   - pandas
