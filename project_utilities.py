@@ -89,7 +89,7 @@ def get_monthly_average_vpd(archive, site, months, starting=None, ending=None, b
     avg_hours = len(months) * 30 * 24
     min_allowed_hours = int(round(0.9 * avg_hours))
 
-    data_gen = archive.get_hourly_data_for(site, starting, ending)
+    data_gen = archive.get_hourly_vpd_data_for(site, starting, ending)
 
     # map the valid time with the break_hour
     data_gen = ((lat, lon, elev, vt - timedelta(hours=break_hour), vpd) 
@@ -217,7 +217,7 @@ def get_annual_hours_avg_max_vpd(archive, site, hours=1000, starting=None, endin
     max average vpd) where the average has 'hours' period. Latitude, longitude, and 
     elevation should rarely change; only in years when the station moved.
     """
-    data_gen = archive.get_xhourly_average_data_for(hours, site, starting, ending)
+    data_gen = archive.get_xhourly_average_vpd_data_for(hours, site, starting, ending)
 
     # map the valid time with the break_hour
     data_gen = ((lat, lon, elev, vt - timedelta(hours=break_hour), vpd) 

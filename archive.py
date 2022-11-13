@@ -64,6 +64,8 @@ class Archive:
                 CREATE TABLE IF NOT EXISTS obs (
                     loc_id      INTEGER   NOT NULL,
                     valid_time  TIMESTAMP NOT NULL,
+                    temp        REAL      NOT NULL, -- Temperature in C
+                    dew         REAL      NOT NULL, -- Dew point in C
                     vpd         REAL      NOT NULL, -- Vapor Pressure Deficit in hPa
                     qc_level    INTEGER   NOT NULL, -- Lower is better.
                     UNIQUE(loc_id, valid_time)
@@ -289,7 +291,7 @@ class Archive:
 
         Arguments:
         data_gen -- an iterable that returns tuples of (station number, station id, coordinates,
-            valid time, vapor pressure deficit, QC code).
+            valid time, temperature, dew point, vapor pressure deficit, QC code).
         """
         self._modified = True
 
@@ -298,11 +300,24 @@ class Archive:
                 (
                     self.__get_location_for(stn_num, latitude, longitude, elevation, site_id, name), 
                     vt,
+                    temp,
+                    dew,
                     vpd,
                     qc
-                ) for stn_num, site_id, (latitude, longitude, elevation), vt, vpd, qc, name in data_gen)
+                ) for 
+                    stn_num, 
+                    site_id,
+                    (latitude, longitude, elevation),
+                    vt, 
+                    temp, 
+                    dew, 
+                    vpd, 
+                    qc,
+                    name
+                in data_gen)
 
-        matched = ((loc.loc_id, vt, vpd, qc) for loc, vt, vpd, qc in matched if not loc.skip_import)
+        matched = ((loc.loc_id, vt, temp, dp, vpd, qc) for 
+                loc, vt, temp, dp, vpd, qc in matched if not loc.skip_import)
 
         with self.db_conn:
 
@@ -311,9 +326,11 @@ class Archive:
                 INSERT OR IGNORE INTO obs (
                     loc_id,
                     valid_time, 
+                    temp,
+                    dew,
                     vpd,
                     qc_level
-                ) VALUES (?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?)
                 """, 
                 matched
             )
@@ -383,7 +400,7 @@ class Archive:
         return (sum_lat / count, sum_lon / count, sum_elev / count)
 
 
-    def get_hourly_data_for(self, site, starting=None, ending=None):
+    def get_hourly_vpd_data_for(self, site, starting=None, ending=None):
         """Get hourly vapor pressure deficit data in a time range.
 
         # Arguments
@@ -472,7 +489,7 @@ class Archive:
         vals = (x for x in vals if x is not None)
         return vals
 
-    def build_xhour_averages(self):
+    def build_xhour_vpd_averages(self):
         '''Build tables with running averages of VPD.'''
 
         periods = (10, 100, 1000, 10000)
@@ -509,7 +526,7 @@ class Archive:
             buffers_vt = tuple(deque([]) for _ in periods)
             buffers_vpd = tuple(deque([]) for _ in periods)
 
-            data_gen = self.get_hourly_data_for(site)
+            data_gen = self.get_hourly_vpd_data_for(site)
 
             for _, vt, vpd, _, _, _, _ in data_gen:
 
@@ -557,7 +574,7 @@ class Archive:
 
         return
 
-    def get_xhourly_average_data_for(self, hours, site, starting=None, ending=None):
+    def get_xhourly_average_vpd_data_for(self, hours, site, starting=None, ending=None):
         """Get the averaged hourly vapor pressure deficit data in a time range.
 
         # Arguments

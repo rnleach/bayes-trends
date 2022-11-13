@@ -178,7 +178,7 @@ def build_row_converter(cols):
             vpd = vapor_pressure_deficit(tmp, dew)
             qc_code = map_qc_codes(tmp_qc, dew_qc)
 
-            return (stn_num, name, stn_id, coords, vt, vpd, qc_code)
+            return (stn_num, name, stn_id, coords, vt, tmp, dew, vpd, qc_code)
 
         except ValueError:
             # For any parsing error, just skip the whole row.
@@ -1162,7 +1162,7 @@ def import_data_from_csv(fname):
         data = (convert_row(r) for r in csvreader)
         data = (r for r in data if r is not None)
 
-        for stn_num, name, stn_id, coords, vt, vpd, qc_code in data:
+        for stn_num, name, stn_id, coords, vt, tmp, dew, vpd, qc_code in data:
 
             if stn_num in stations:
                 stn_id_forced = stations[stn_num]
@@ -1172,7 +1172,7 @@ def import_data_from_csv(fname):
 
             vt = round_to_hour(vt)
 
-            yield (stn_num, stn_id, coords, vt, vpd, qc_code, name)
+            yield (stn_num, stn_id, coords, vt, tmp, dew, vpd, qc_code, name)
 
     return
 
@@ -1194,7 +1194,7 @@ def main():
 
     # Open an archive and process each file.
     with archive.Archive() as ar:
-        # Make sure and remember which stations. to skip.
+        # Make sure and remember which stations to skip.
         ar.add_skip_stations(skip_stations.keys())
 
         # Add new data
@@ -1214,7 +1214,7 @@ def main():
 
         # pre-build multi-hour averages.
         if do_averages:
-            ar.build_xhour_averages()
+            ar.build_xhour_vpd_averages()
 
         ar.output_sites_kml(kml_file, log_file)
 
