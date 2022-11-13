@@ -1,7 +1,10 @@
 functions {
-  // Our mean can never be less than zero because vapor pressure deficit cannot be less than zero.
-  // But we need some small values so there is a gradient for solving the model, hence using the
-  // exponential at negative values.
+  // The link function is not a traditional exponential because that would distort the meaning of 
+  // the linear coefficients. However, the mean still MUST be positive for the Gamma distribution.
+  // So the link function (practically) preserves the value of the linear model when it predicts a
+  // mean value above zero. Otherwise it keeps the value very small, but still greater than zero.
+  // This function effectively truncates predicted mean values at zero. So the linear parameters can
+  // still be interpreted directly (with some care).
   real limit_positive(real x) {
     if (x >= 0) return x + 1.0 / 1000.0;
     return exp(x) / 1000.0;
@@ -26,19 +29,15 @@ parameters {
   array[K] real<lower=0> sigma;         // per site variability
 }
 model {
-  a_mu ~ normal(0.0, 0.5);          // The mean of the vapor pressure deficit data set should be 1
+  a_mu ~ normal(1.0, 0.5);          // The mean of the vapor pressure deficit data set should be 1
   a_sigma ~ exponential(1.0);
   by_mu ~ normal(0.0, 0.6);         // The slope of the year term.
   by_sigma ~ exponential(1.0);
   sigma_lam ~ exponential(1.0);
 
-  {
-    for (k in 1:K) {
-      a[k] ~ normal(a_mu, a_sigma);
-      by[k] ~ normal(by_mu, by_sigma);
-      sigma[k] ~ exponential(sigma_lam);
-    }
-  }
+  a ~ normal(a_mu, a_sigma);
+  by ~ normal(by_mu, by_sigma);
+  sigma ~ exponential(sigma_lam);
 
   {
     vector[N] mu;
