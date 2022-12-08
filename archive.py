@@ -444,7 +444,7 @@ class Archive:
                 f"""
                     DROP TABLE IF EXISTS hourly;
 
-                    CREATE TEMP TABLE hourly as 
+                    CREATE TEMP TABLE hourly AS 
                     SELECT
                         valid_time, 
                         vpd, 
@@ -454,6 +454,13 @@ class Archive:
                         {start_str}
                         {end_str}
                     ORDER BY valid_time ASC;
+
+                    DROP TABLE IF EXISTS hourly_qc;
+
+                    CREATE TEMP TABLE hourly_qc AS 
+                    SELECT valid_time, MIN(qc_level) as qc
+                    FROM hourly
+                    GROUP BY valid_time;
                 """)
 
 
@@ -463,10 +470,7 @@ class Archive:
                 AVG(vpd), 
                 COUNT(*)
             FROM hourly as ob1
-            JOIN (
-                SELECT valid_time, MIN(qc_level) as qc
-                FROM hourly
-                GROUP BY valid_time) as ob2
+            JOIN hourly_qc as ob2
             ON ob1.valid_time = ob2.valid_time 
                 AND ob2.qc = ob1.qc_level
             GROUP BY ob1.valid_time
