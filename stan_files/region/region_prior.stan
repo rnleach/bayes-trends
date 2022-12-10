@@ -20,12 +20,22 @@ generated quantities {
   real<lower=0> a_sigma = exponential_rng(1.0);
   real by_mu = normal_rng(0.0, 0.6);
   real<lower=0> by_sigma = exponential_rng(1.0);
-  real<lower=0> sigma_lam = exponential_rng(1.0);
+  real log_sigma_mu = normal_rng(0.0, 0.5);
+  real<lower=0> log_sigma_sigma = exponential_rng(1.0);
+  corr_matrix[3] rho = lkj_corr_rng(3, 2.0);
 
   // Use the hyper-priors to determine the distribution
-  real a = normal_rng(a_mu, a_sigma);
-  real by = normal_rng(by_mu, by_sigma);   
-  real<lower=0> sigma = exponential_rng(sigma_lam);
+  real a;
+  real by;
+  real log_sigma;
+  {
+    vector[3] MU = [a_mu, by_mu, log_sigma_mu]';
+    vector[3] SIGMA = [a_sigma, by_sigma, log_sigma_sigma]';
+    vector[3] params = multi_normal_rng(MU, quad_form_diag(rho, SIGMA));
+    a = params[1];
+    by = params[2];
+    log_sigma = params[3];
+  }
 
   // Prior predictions.
   vector[N] prior_pred;
@@ -35,7 +45,7 @@ generated quantities {
 
   for (n in 1:N) {
     mu[n] = limit_positive(a + by * year[n]);
-    real betap = mu[n] / sigma^2;
+    real betap = mu[n] / exp(log_sigma)^2;
     real alpha = mu[n] * betap;
     prior_pred[n] = gamma_rng(alpha, betap);
   }

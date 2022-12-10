@@ -18,26 +18,39 @@ data {
   array[N] real<lower=0> vpd;           // The scaled (proportional to mean) vapor pressure deficit.
 }
 parameters {
-  real a_mu;
-  real<lower=0> a_sigma;
-  real by_mu;
-  real<lower=0> by_sigma;
-  real<lower=0> sigma_lam;
-
   array[K] real a;                      // per site intercept
   array[K] real by;                     // per site slope
-  array[K] real<lower=0> sigma;         // per site variability
+  array[K] real log_sigma;              // per site variability
+
+  real a_mu;                            // all sites intercept mean 
+  real<lower=0> a_sigma;                // all sites intercept variability
+  real by_mu;                           // all sites slope mean
+  real<lower=0> by_sigma;               // all sites slope variability
+  real log_sigma_mu;                    // all sites variability mean
+  real <lower=0> log_sigma_sigma;       // all sites variability variability
+
+  corr_matrix[3] rho;                   // Correlation matrix for intercept, slope, and variability
 }
 model {
-  a_mu ~ normal(1.0, 0.5);          // The mean of the vapor pressure deficit data set should be 1
+  a_mu ~ normal(1.0, 0.5);
   a_sigma ~ exponential(1.0);
-  by_mu ~ normal(0.0, 0.6);         // The slope of the year term.
+  by_mu ~ normal(0.0, 0.6);
   by_sigma ~ exponential(1.0);
-  sigma_lam ~ exponential(1.0);
+  log_sigma_mu ~ normal(0.0, 0.5);
+  log_sigma_sigma ~ exponential(1.0);
+  rho ~ lkj_corr(2.0);
 
-  a ~ normal(a_mu, a_sigma);
-  by ~ normal(by_mu, by_sigma);
-  sigma ~ exponential(sigma_lam);
+  {
+    vector[3] MU;
+    MU = [a_mu, by_mu, log_sigma_mu]';
+
+    vector[3] SIGMA;
+    SIGMA = [a_sigma, by_sigma, log_sigma_sigma]';
+
+    array[K] vector[3] YY;
+    for( k in 1:K) YY[k] = [a[k] , by[k], log_sigma[k]]';
+    YY ~ multi_normal(MU , quad_form_diag(rho, SIGMA));
+  }
 
   {
     vector[N] mu;
@@ -45,7 +58,7 @@ model {
     vector[N] alpha;
     for (n in 1:N) {
       mu[n] = limit_positive(a[site[n]] + by[site[n]] * year[n]);
-      betap[n] = mu[n] / sigma[site[n]]^2;
+      betap[n] = mu[n] / exp(log_sigma[site[n]])^2;
       alpha[n] = mu[n] * betap[n];
     }
     vpd ~ gamma(alpha, betap);
@@ -59,7 +72,7 @@ generated quantities {
 
   for (n in 1:N) {
     mu[n] = limit_positive(a[site[n]] + by[site[n]] * year[n]);
-    real betap = mu[n] / sigma[site[n]]^2;
+    real betap = mu[n] / exp(log_sigma[site[n]])^2;
     real alpha = mu[n] * betap;
     post_pred[n] = gamma_rng(alpha, betap);
   }

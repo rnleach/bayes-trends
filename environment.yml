@@ -2,14 +2,15 @@ name: BayesTrends
 channels:
   - conda-forge
 dependencies:
-  - cartopy
   - arviz>=0.13.0 # Install with PiP if not available on Anaconda
+  - cartopy
+  - cmdstanpy
+  - ipywidgets
   - jupyterlab
   - matplotlib
   - numpy
   - pandas
   - patsy
-  - cmdstanpy
   - requests
   - scipy
   - tqdm
