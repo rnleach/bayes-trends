@@ -368,11 +368,23 @@ class Archive:
                 for loc in self.__locations[stn_num]
                 )
 
+        site_ids = set((loc.site_id,)
+                for stn_num in stn_nums 
+                for loc in self.__locations[stn_num]
+                )
+
         num_rows = 0
         with self.db_conn:
             num_rows += self.db_conn.executemany("DELETE FROM obs WHERE loc_id=?", loc_ids).rowcount
             num_rows += self.db_conn.executemany(
                     "UPDATE locations SET skip_import = 1 WHERE loc_id=?", loc_ids).rowcount
+
+            for table in ("obs10", "obs100", "obs1000", "obs10000"):
+                try:
+                    num_rows += self.db_conn.executemany(f"DELETE FROM {table} WHERE site_id =?",
+                            site_ids).rowcount
+                except:
+                    print(f"Table {table} does not exist!")
 
         self.__locations = self.__load_locations()
 
