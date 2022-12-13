@@ -265,10 +265,6 @@ skip_stations = {
         99999904205: 'kawo',
         72794504205: 'kawo',
 
-        72793599999: 'kbfi', # Seattle Boeing Field
-        72793524234: 'kbfi',
-        99999924234: 'kbfi',
-
         72027299999: 'kbvs', # SKAGIT REGIONAL
         99999994282: 'kbvs',
         72027294282: 'kbvs',
@@ -282,20 +278,6 @@ skip_stations = {
 
         72787399999: 'kcqv', # COLVILLE MUNICIPAL AIRPORT
         72787199999: 'kcqv',
-
-        72785499999: 'kdew', # Deer Park
-        72787099999: 'kdew',
-        99999994119: 'kdew',
-        72787094119: 'kdew',
-        72785494119: 'kdew',
-
-        72788399999: 'keln', # Ellensburg Bowers Field
-        72788324220: 'keln',
-        99999924220: 'keln',
-
-        72782624141: 'keph', # Ephrata
-        72790024141: 'keph',
-        99999924141: 'keph',
 
         72781399999: 'kfct', # Vagabond Army Air Field, Yakima
 
@@ -314,32 +296,11 @@ skip_stations = {
         74201024228: 'knou', # 'know', 'knkw' PORT ANGELES WEATHER BUREAU AIRPORT
         99999924228: 'knou',
 
-        72789099999: 'komk', # Omak
-
-        72789094197: 'komk', # Omak
-        99999994197: 'komk',
-
         72220804224: 'kors', # EASTSOUND ORCAS ISLAND AIRPORT
         99999904224: 'kors',
         72220899999: 'kors',
 
-        72793724222: 'kpae', # EVERETT SNOHOMISH CO AIRPORT
-        72793799999: 'kpae',
-        99999924222: 'kpae',
-
         72038800469: 'kplu', # PIERCE CO AIRPORT THUN FIELD
-
-        72784524163: 'kpsc', # Pasco Tri Cities
-        72784599999: 'kpsc',
-        99999924163: 'kpsc',
-
-        72785799999: 'kpuw', # Pullman (WA) / Moscow (ID)
-        99999994129: 'kpuw',
-        72785794129: 'kpuw',
-
-        72792894263: 'kpwt', # BREMERTON, WA US
-        72792899999: 'kpwt', 
-        99999994263: 'kpwt',
 
         72788499999: 'krld', # Richland Airport
 
@@ -363,10 +324,6 @@ skip_stations = {
         72793894274: 'ktiw', # TACOMA NARROWS AIRPORT, WA US
         72793899999: 'ktiw',
         99999994274: 'ktiw',
-
-        72698599999: 'kttd', # PORTLAND TROUTDALE
-        99999924242: 'kttd',
-        72698524242: 'kttd',
 
         99430099999: 'ktti', # TATOOSH ISLAND WA
         99999924240: 'ktti',
@@ -429,20 +386,7 @@ skip_stations = {
         72063800224: 'kbdn', # BEND MUNICIPAL AIRPORT
         94999900224: 'kbdn',
 
-        72598524267: 'kbok', # BROOKINGS STATE AIRPORT
-        72598599999: 'kbok',
-        72598199999: 'kbok',
-        72598099999: 'kbok',
-        72036524267: 'kbok',
-        72036599999: 'kbok',
-
         99999924134: 'kbno', # Federal Building, Burns, OR
-
-        72694599999: 'kcvo', # CORVALLIS MUNICIPAL
-        99999924248: 'kcvo',
-
-        72694524202: 'kcvo', # CORVALLIS MUNICIPAL
-        99999924202: 'kcvo',
 
         72698799999: 'kczk', # CASCADE LOCKS STATE
         99999994204: 'kczk',
@@ -451,9 +395,6 @@ skip_stations = {
         72688399999: 'khri', # Hermiston 
         72688304113: 'khri',
         99999904113: 'khri',
-
-        72597694285: 'klkv', # LAKEVIEW LAKE CO AIRPORT
-        72597699999: 'klkv',
 
         99999924249: 'klmt', # Klamath
 
@@ -474,11 +415,6 @@ skip_stations = {
         72687499999: 'kp88',  # ROME AUTOMATIC METEOROLOGICAL OB
 
         72695799999: 'kpfc', # PACIFIC CITY STATE
-
-        72690424231: 'krbg', # ROSEBURG REGIONAL AIRPORT
-        72690499999: 'krbg',
-        72690124231: 'krbg',
-        99999924231: 'krbg',
 
         72687599999: 'kreo', # ROME STATE
         72687594107: 'kreo',
@@ -535,10 +471,6 @@ skip_stations = {
 
         72036904135: 'kdij', # DRIGGS REED MEMORIAL AIRPORT
 
-        72681399999: 'keul', # CALDWELL AWOS
-        72681394195: 'keul', 
-        99999994195: 'keul',
-
         72687300452: 'kgic', # Grangeville
         72687399999: 'kgic',
         72687199999: 'kgic',
@@ -558,9 +490,6 @@ skip_stations = {
         99999924151: 'kmld',
 
         72783699999: 'kmlp', # Mullan Pass, this location is down in town.
-
-        72681599999: 'kmuo', # MOUNTAIN HOME AFB
-        72681524106: 'kmuo', 
 
         99999994182: 'kmyl', # McCall
         72578899999: 'kmyl',
@@ -583,10 +512,6 @@ skip_stations = {
         72682404112: 'ksnt', # STANLEY RANGER STATION
 
         99999924196: 'ksmn', # Salmon
-
-        72686599999: 'ksmn', # Salmon
-        72686199999: 'ksmn',
-        72686524196: 'ksmn',
 
         72586599999: 'ksun', # FRIEDMAN MEM
         99999994161: 'ksun',
@@ -650,21 +575,10 @@ skip_stations = {
 
         72679099999: 'kbtm2', # Butte, but 2.5km away.
 
-        99999924137: 'kctb', # Cut Bank
-        72779624137: 'kctb',
-        72769024137: 'kctb',
-        
         72099899999: 'kem1', # Echo Winifred
         
         72772599999: 'ketm', # Elliston
 
-        72667624087: 'kgdv', # Glendive
-        99999924087: 'kgdv',
-        72667699999: 'kgdv',
-
-        72775524112: 'kgfa', # Malstrom AFB
-        72775599999: 'kgfa',
-        
         99999994010: 'kgsg', #  ST. MARIE
 
         72768599999: 'kgsg2', #  GLASGOW INDUSTRIAL
@@ -737,17 +651,10 @@ skip_stations = {
         72577199999: 'kbpi2', # BIG PINEY - but about 5km away?
         72577099999: 'kbpi2', # This location moved about 5km without being renamed.
 
-        72671024164: 'kbpi', # BIG PINEY MARBLETON AIRPORT
-        72671099999: 'kbpi',
-
         72665494054: 'kbyg', # BUFFALO JOHNSON CO AIRPORT
         99999994054: 'kbyg',
         72665499999: 'kbyg',
         72670499999: 'kbyg',
-
-        72670099999: 'kcod', # Cody
-        72670024045: 'kcod',
-        72666699999: 'kcod',
 
         99999924045: 'kcod2', # Cody but about 12km away, big range in coords for this location.
 
@@ -766,10 +673,6 @@ skip_stations = {
         72666799999: 'kgey', # South Big Horn Co
         99999924048: 'kgey',
         72666724048: 'kgey',
-
-        72577624166: 'kjac', # JACKSON HOLE AIRPORT
-        99999924166: 'kjac',
-        72577699999: 'kjac',
 
         72096900341: 'kjpd', # TEN SLEEP
         72096999999: 'kjpd',
@@ -895,10 +798,6 @@ skip_stations = {
         72563524044: 'kaia',
         99999924044: 'kaia',
 
-        72563624017: 'kcdr', # CHADRON MUNICIPAL AIRPORT
-        72563699999: 'kcdr',
-        99999924017: 'kcdr',
-
         72563799999: 'kgrn', # GORDON MUNICIPAL
 
         72098699999: 'xisn', # INDIA SIDNEY, NE US
@@ -982,8 +881,6 @@ skip_stations = {
         72289799999: 'ksbp',
         99999993206: 'ksbp',
 
-        72383023187: 'ksdb', # SANDBERG, CA US
-
         72290403178: 'ksdm', # BROWN FIELD MUNICIPAL, CA US
         72290423196: 'ksdm',
         72290499999: 'ksdm',
@@ -1024,14 +921,14 @@ skip_stations = {
         72295599999: 'ktoa',
         99999903174: 'ktoa',
 
-        72584693201: 'ktrk', # TRUCKEE TAHOE, CA US
-        72584699999: 'ktrk',
-        99999993201: 'ktrk',
-
         72584793230: 'ktvl', # SOUTH LAKE TAHOE AIRPORT, CA US
         72584799999: 'ktvl',
 
         74917100479: 'ktsp', # TEHACHAPI MUNICIPAL AIRPORT, CA US
+
+        72584693201: 'ktrk', # TRUCKEE TAHOE, CA US
+        72584699999: 'ktrk', # Missing a LOT of data.
+        99999993201: 'ktrk',
 
         72590523275: 'kuki', # UKIAH MUNICIPAL, CA US
         72590599999: 'kuki',
@@ -1132,13 +1029,6 @@ skip_stations = {
         72375493027: 'ksjn',
         99999993027: 'ksjn',
 
-        72374703101: 'ksow', # SHOW LOW AIRPORT, AZ US
-        72374799999: 'ksow',
-        99999903101: 'ksow',
-
-        72272093063: 'ksvc', # Grant CO. Silver City
-        72272193063: 'ksvc',
-
         72280023195: 'kyum', # YUMA INTERNATIONAL AIRPORT, AZ US
         72280099999: 'kyum',
         72280199999: 'kyum',
@@ -1153,10 +1043,6 @@ skip_stations = {
 
         # Texas
         72270499999: 'kbif', # Fort Biggs Army Air Field
-
-        72262699999: 'kmrf', # Marfa AP
-        72264093035: 'kmrf',
-        72264099999: 'kmrf',
 
         72265023023: 'maf', # MIDLAND INTERNATIONAL AIRPORT, TX US
 
@@ -1178,10 +1064,6 @@ skip_stations = {
 
         72470093141: 'kpuc', # Price Carbon County
         72470099999: 'kpuc',
-
-        72475423186: 'ksgu', # ST GEORGE MUNICIPAL AIRPORT, UT US
-        72475499999: 'ksgu',
-        99999923186: 'ksgu',
 
         72472599999: 'kt62', # TOOELE, UT US
 
@@ -1251,20 +1133,14 @@ skip_stations = {
         # New Mexico
         69001499999: '2c2', # Near White Sands
 
-        72269393097: 'kalm', # White Sands
-        72269399999: 'kalm',
-        99999993097: 'kalm',
-        99999993097: 'kalm',
-
         72362099999: 'konm',
         72362093040: 'konm',
 
         72365623049: 'ksaf', # SANTA FE CO MUNICIPAL, NM US
         72365699999: 'ksaf',
 
-        72268393083: 'ksrr', # RUIDOSO SIERRA BLANCA AIRPORT, NM US
-        72268399999: 'ksrr',
-        99999993083: 'ksrr',
+        72272093063: 'ksvc', # Grant CO. Silver City
+        72272193063: 'ksvc',
 
         72367623048: 'ktcc', # TUCUMCARI MUNICIPAL, NM US
         72367699999: 'ktcc',
@@ -1289,9 +1165,6 @@ skip_stations = {
 
         99999993007: 'kguc', # Near Gunnison
 
-        72467799999: 'kguc', # Gunnison
-        72467793007: 'kguc',
-
         72467894033: 'ksbs', # STEAMBOAT SPRINGS ADAMS FIELD, CO US
         72467899999: 'ksbs',
 
@@ -1300,10 +1173,6 @@ skip_stations = {
         99999903028: 'kspd',
 
         72054400168: 'kstk', # STERLING MUNICIPAL AIRPORT, CO US
-
-        72462703011: 'ktex', # TELLURIDE REGIONAL AIRPORT, CO US
-        72462799999: 'ktex',
-        99999903011: 'ktex',
 
         74000203042: 'kvtp', # LA VETA PASS, CO US
         74000299999: 'kvtp',
@@ -1489,11 +1358,6 @@ skip_stations = {
         99999993073: 'kase',
         99999993073: 'kase',
 
-        72267603035: 'kats',
-        72267699999: 'kats',
-        99999903035: 'kats',
-        99999903035: 'kats',
-
         72026723224: 'kaun',
         72026799999: 'kaun',
         99999923224: 'kaun',
@@ -1548,8 +1412,6 @@ skip_stations = {
         74611099999: 'kbys',
 
         72495023254: 'kccr',
-        72495023254: 'kccr',
-        72493623254: 'kccr',
         72493623254: 'kccr',
 
         72206103038: 'kccu',
@@ -1557,33 +1419,21 @@ skip_stations = {
         99999903038: 'kccu',
 
         72476793069: 'kcez',
-        72476793069: 'kcez',
         72476799999: 'kcez',
         99999993069: 'kcez',
-        99999993069: 'kcez',
-
-        72274803914: 'kcgz',
-        72274899999: 'kcgz',
-        99999903914: 'kcgz',
-        99999903914: 'kcgz',
 
         72274953128: 'kchd',
         72274999999: 'kchd',
-        99999953128: 'kchd',
         99999953128: 'kchd',
 
         72063500221: 'kcmr',
 
         72289903179: 'kcno',
-        72289903179: 'kcno',
         72289999999: 'kcno',
-        99999903179: 'kcno',
         99999903179: 'kcno',
 
         72477693075: 'kcny',
-        72477693075: 'kcny',
         72477699999: 'kcny',
-        99999993075: 'kcny',
         99999993075: 'kcny',
 
         72210103039: 'kcpw',
@@ -1591,8 +1441,6 @@ skip_stations = {
         99999903039: 'kcpw',
 
         72267703027: 'kcqc',
-        72267703027: 'kcqc',
-        99999903027: 'kcqc',
         99999903027: 'kcqc',
         72267799999: 'kcqc',
 
@@ -1605,11 +1453,6 @@ skip_stations = {
         99999903177: 'kcrq',
 
         74917900392: 'kcvh',
-
-        72268923077: 'kcvn',
-        72268999999: 'kcvn',
-        99999923077: 'kcvn',
-        99999923077: 'kcvn',
 
         72268623008: 'kcvs',
         72268699999: 'kcvs',
@@ -1661,9 +1504,6 @@ skip_stations = {
 
         72057600174: 'kedu',
 
-        72467523063: 'kege',
-        72467599999: 'kege',
-
         72594024213: 'keka',
         72594099999: 'keka',
 
@@ -1687,9 +1527,6 @@ skip_stations = {
         72278399999: 'kffz',
         99999903185: 'kffz',
         99999903185: 'kffz',
-
-        72273003124: 'kfhu',
-        72273099999: 'kfhu',
 
         72085200280: 'kfly',
         72053500162: 'kfmm',
@@ -1822,9 +1659,6 @@ skip_stations = {
         99999903013: 'klaa',
         99999903013: 'klaa',
 
-        72365493091: 'klam',
-        72365499999: 'klam',
-
         72479694128: 'klgu',
         72479694128: 'klgu',
         72479699999: 'klgu',
@@ -1833,15 +1667,6 @@ skip_stations = {
 
 
         72053800164: 'klmo',
-
-        72289523243: 'klpc',
-        72289599999: 'klpc',
-        99999923243: 'klpc',
-        99999923243: 'klpc',
-
-        72269593041: 'klru',
-        72269599999: 'klru',
-        99999993041: 'klru',
 
         72097600345: 'klsb',
 
@@ -2018,19 +1843,9 @@ skip_stations = {
         99999993138: 'kpsp',
         99999993138: 'kpsp',
 
-        72389523149: 'kptv',
-        72389599999: 'kptv',
-        99999923149: 'kptv',
-        99999923149: 'kptv',
-
         72564499999: 'kpum',
 
         72064500227: 'kpvf',
-
-        72572424174: 'kpvu',
-        72572499999: 'kpvu',
-        99999924174: 'kpvu',
-        99999924174: 'kpvu',
 
         69236499999: 'kqav',
 
@@ -2119,15 +1934,31 @@ stations = {
         72784624160: 'kalw', # Walla Walla
         99999924160: 'kalw',
 
+        72793599999: 'kbfi', # Seattle Boeing Field
+        72793524234: 'kbfi',
+        99999924234: 'kbfi',
+
         72797624217: 'kbli', # BELLINGHAM INTERNATIONAL AIRPORT
 
-        99999924207: 'ktcm', # TACOMA MCCHORD AFB
+        72785499999: 'kdew', # Deer Park
+        72787099999: 'kdew',
+        99999994119: 'kdew',
+        72787094119: 'kdew',
+        72785494119: 'kdew',
 
         72698824219: 'kdls', # The Dalles
         99999924219: 'kdls',
 
         72782599999: 'keat', # Pangborn Memorial
         72782594239: 'keat',
+
+        72788399999: 'keln', # Ellensburg Bowers Field
+        72788324220: 'keln',
+        99999924220: 'keln',
+
+        72782624141: 'keph', # Ephrata
+        72790024141: 'keph',
+        99999924141: 'keph',
 
         72785024157: 'kgeg', # Spokane International, Geiger Field
         99999924157: 'kgeg',
@@ -2155,6 +1986,26 @@ stations = {
         72792024227: 'kolm', # OLYMPIA AIRPORT, WA US
         99999924227: 'kolm',
 
+        72789099999: 'komk', # Omak
+        72789094197: 'komk', # Omak
+        99999994197: 'komk',
+
+        72793724222: 'kpae', # EVERETT SNOHOMISH CO AIRPORT
+        72793799999: 'kpae',
+        99999924222: 'kpae',
+
+        72784524163: 'kpsc', # Pasco Tri Cities
+        72784599999: 'kpsc',
+        99999924163: 'kpsc',
+
+        72785799999: 'kpuw', # Pullman (WA) / Moscow (ID)
+        99999994129: 'kpuw',
+        72785794129: 'kpuw',
+
+        72792894263: 'kpwt', # BREMERTON, WA US
+        72792899999: 'kpwt', 
+        99999994263: 'kpwt',
+
         72793024233: 'ksea', # SEATTLE TACOMA AIRPORT, WA US
         99999924233: 'ksea',
 
@@ -2172,6 +2023,7 @@ stations = {
 
         74206024207: 'ktcm', # TACOMA MCCHORD AFB, WA US
         74206099999: 'ktcm',
+        99999924207: 'ktcm', # TACOMA MCCHORD AFB
 
         72797094240: 'kuil', # QUILLAYUTE AIRPORT
         99999994240: 'kuil',
@@ -2191,6 +2043,18 @@ stations = {
         72683894185: 'kbno',
         72683099999: 'kbno',
 
+        72598524267: 'kbok', # BROOKINGS STATE AIRPORT
+        72598599999: 'kbok',
+        72598199999: 'kbok',
+        72598099999: 'kbok',
+        72036524267: 'kbok',
+        72036599999: 'kbok',
+
+        72694599999: 'kcvo', # CORVALLIS MUNICIPAL
+        99999924248: 'kcvo',
+        72694524202: 'kcvo', # CORVALLIS MUNICIPAL
+        99999924202: 'kcvo',
+
         72693024221: 'keug',  # EUGENE MAHLON SWEET AIRPORT
         99999924221: 'keug',
 
@@ -2201,6 +2065,9 @@ stations = {
         72688499999: 'klgd', # La Grande Union
         72688424148: 'klgd',
         99999924148: 'klgd',
+
+        72597694285: 'klkv', # LAKEVIEW LAKE CO AIRPORT
+        72597699999: 'klkv',
 
         72589599999: 'klmt', # KLAMATH FALLS
         72589594236: 'klmt',
@@ -2225,12 +2092,21 @@ stations = {
         72698024229: 'kpdx', # PORTLAND INTERNATIONAL AIRPORT
         99999924229: 'kpdx',
 
+        72690424231: 'krbg', # ROSEBURG REGIONAL AIRPORT
+        72690499999: 'krbg',
+        72690124231: 'krbg',
+        99999924231: 'krbg',
+
         72692024230: 'krdm', # REDMOND AIRPORT
         72683524230: 'krdm',
         99999924230: 'krdm',
 
         72694024232: 'ksle', # SALEM AIRPORT MCNARY FIELD, OR US
         99999924232: 'ksle',
+
+        72698599999: 'kttd', # PORTLAND TROUTDALE
+        99999924242: 'kttd',
+        72698524242: 'kttd',
 
         # Idaho
         72681024131: 'kboi',  # BOISE AIR TERMINAL
@@ -2242,6 +2118,10 @@ stations = {
         72783499999: 'kcoe', # Coure D'Alene
         72783424136: 'kcoe',
         99999924136: 'kcoe',
+
+        72681399999: 'keul', # CALDWELL AWOS
+        72681394195: 'keul', 
+        99999994195: 'keul',
 
         72578524145: 'kida', # IDAHO FALLS FANNING FIELD
         99999924145: 'kida',
@@ -2258,8 +2138,15 @@ stations = {
         72681799999: 'kmlp', 
         99999924154: 'kmlp', 
 
+        72681599999: 'kmuo', # MOUNTAIN HOME AFB
+        72681524106: 'kmuo', 
+
         72578024156: 'kpih', # POCATELLO REGIONAL AIRPORT
         99999924156: 'kpih',
+
+        72686599999: 'ksmn', # Salmon
+        72686199999: 'ksmn',
+        72686524196: 'ksmn',
 
         # Montana
         72677024033: 'kbil', # Billings
@@ -2273,11 +2160,22 @@ stations = {
         72679724132: 'kbzn', # Bozeman
         99999924132: 'kbzn',
 
+        99999924137: 'kctb', # Cut Bank
+        72779624137: 'kctb',
+        72769024137: 'kctb',
+        
         72770024138: 'kdln', # Dillon
         72679624138: 'kdln',
         72679999999: 'kdln',
         99999924138: 'kdln',
 
+        72667624087: 'kgdv', # Glendive
+        99999924087: 'kgdv',
+        72667699999: 'kgdv',
+
+        72775524112: 'kgfa', # Malstrom AFB
+        72775599999: 'kgfa',
+        
         72768094008: 'kggw', # Glasgow
         99999994008: 'kggw',
 
@@ -2307,14 +2205,19 @@ stations = {
         72768799999: 'ksdy',
         99999994028: 'ksdy',
 
-        72679124135: 'kbtm',
+        72679124135: 'kbtm', # Butte
         72678524135: 'kbtm',
-        72678524135: 'kbtm',
-        72774024135: 'kbtm',
         72774024135: 'kbtm',
         99999924135: 'kbtm',
 
         # Wyoming
+        72671024164: 'kbpi', # BIG PINEY MARBLETON AIRPORT
+        72671099999: 'kbpi',
+
+        72670099999: 'kcod', # Cody
+        72670024045: 'kcod',
+        72666699999: 'kcod',
+
         72569024089: 'kcpr', # CASPER NATRONA CO INTERNATIONAL AIRPORT
         99999924089: 'kcpr',
 
@@ -2325,6 +2228,10 @@ stations = {
         72665094023: 'kgcc',
         72666299999: 'kgcc',
         72665599999: 'kgcc',
+
+        72577624166: 'kjac', # JACKSON HOLE AIRPORT
+        99999924166: 'kjac',
+        72577699999: 'kjac',
 
         72576024021: 'klnd', # LANDER HUNT FIELD AIRPORT
         99999924021: 'klnd',
@@ -2360,6 +2267,10 @@ stations = {
         # Nebraska !
         72566024028: 'kbff',
 
+        72563624017: 'kcdr', # CHADRON MUNICIPAL AIRPORT
+        72563699999: 'kcdr',
+        99999924017: 'kcdr',
+
         # Colorado
         72462023061: 'kals', 
 
@@ -2368,9 +2279,19 @@ stations = {
         72565003017: 'kden', # Denver IAP
         72467003017: 'kden',
 
+        72467523063: 'kege', # EAGLE CO AIRPORT, CO US
+        72467599999: 'kege',
+
         72476023066: 'kgjt', # Grand Junction
 
+        72467799999: 'kguc', # Gunnison
+        72467793007: 'kguc',
+
         72464093058: 'kpub', 
+
+        72462703011: 'ktex', # TELLURIDE REGIONAL AIRPORT, CO US
+        72462799999: 'ktex',
+        99999903011: 'ktex',
 
         # California
         72594524283: 'kacv',
@@ -2381,9 +2302,13 @@ stations = {
 
         72389093193: 'kfat', # Fresno
 
+        72295023174: 'klax', 
+
         72297023129: 'klgb',
 
-        72295023174: 'klax', 
+        72289523243: 'klpc', # LOMPOC AIRPORT, CA US
+        72289599999: 'klpc',
+        99999923243: 'klpc',
 
         72483523206: 'kmhr',
         72483323206: 'kmhr',
@@ -2393,21 +2318,34 @@ stations = {
         72293199999: 'knkx',
         72293093107: 'knkx',
 
-        72492023237: 'ksck', # Stockton
-
-        72494023234: 'ksfo', # San Francisco 
-
         72290693112: 'knzy', 
+
+        72389523149: 'kptv', # PORTERVILLE MUNICIPAL AIRPORT, CA US
+        72389599999: 'kptv',
+        99999923149: 'kptv',
 
         72592024257: 'krdd', # Redding 
         72591524257: 'krdd',
 
+        72492023237: 'ksck', # Stockton
+
+        72383023187: 'ksdb', # SANDBERG, CA US
+
+        72494023234: 'ksfo', # San Francisco 
+
         4504099999: 'xpps', # PILAR POINT AFS
 
         # Arizona
+        72274803914: 'kcgz',
+        72274899999: 'kcgz',
+        99999903914: 'kcgz',
+
         72272099999: 'kdug', # Douglas Bisbee IAP
         72273593026: 'kdug', 
         72273593026: 'kdug', 
+
+        72273003124: 'kfhu', # FORT HUACHUCA, AZ US
+        72273099999: 'kfhu',
 
         72375503103: 'kflg', # Flagstaff
         72375003103: 'kflg', 
@@ -2420,23 +2358,65 @@ stations = {
         72372323184: 'kprc', # Prescott
         72372123184: 'kprc',
 
+        72374703101: 'ksow', # SHOW LOW AIRPORT, AZ US
+        72374799999: 'ksow',
+        99999903101: 'ksow',
+
         72274023160: 'ktus', # Tucson
         72274023160: 'ktus',
 
         # New Mexico
         72365023050: 'kabq',
 
+        72269393097: 'kalm', # White Sands
+        72269399999: 'kalm',
+        99999993097: 'kalm',
+        99999993097: 'kalm',
+
+        72267603035: 'kats', # ARTESIA MUNICIPAL AIRPORT, NM US
+        72267699999: 'kats',
+        99999903035: 'kats',
+        99999903035: 'kats',
+
         72360023051: 'kcao',
+
+        72268923077: 'kcvn', # CLOVIS MUNICIPAL AIRPORT, NM US
+        72268999999: 'kcvn',
+        99999923077: 'kcvn',
+        99999923077: 'kcvn',
 
         72362723081: 'kgup', 
 
+        72365493091: 'klam', # Los Alamos
+        72365499999: 'klam',
+
+        72269593041: 'klru', # LAS CRUCES MUNICIPAL AIRPORT, NM US
+        72269599999: 'klru',
+        99999993041: 'klru',
+
         72268023009: 'krow', # Roswell
+
+        72268393083: 'ksrr', # RUIDOSO SIERRA BLANCA AIRPORT, NM US
+        72268399999: 'ksrr',
+        99999993083: 'ksrr',
 
         # Texas
         72270023044: 'kelp', # El Paso
 
+        72262699999: 'kmrf', # Marfa AP
+        72264093035: 'kmrf',
+        72264099999: 'kmrf',
+
         # Utah
         72475593129: 'kcdc',
+
+        72572424174: 'kpvu', # PROVO AIRPORT, UT US
+        72572499999: 'kpvu',
+        99999924174: 'kpvu',
+
+        72475423186: 'ksgu', # ST GEORGE MUNICIPAL AIRPORT, UT US
+        72475499999: 'ksgu',
+        99999923186: 'ksgu',
 
         72572024127: 'kslc',
 

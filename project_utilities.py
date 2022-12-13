@@ -372,16 +372,20 @@ def load_inference_data(file_name):
 
 
 def plot_map(lats, lons, data=None, label_points=False, colormap=None, title=None, 
-             colorbar_label=None, color_min=None, color_max=None, extents=None):
+             colorbar_label=None, color_min=None, color_max=None, extents=None,
+             figsize=None):
     
     # Set up the map background
     stamen_terrain = cimgt.Stamen('terrain-background')
     
-    fig, ax_map = plt.subplots(1, 1, 
+    if figsize is None:
+        figsize=(12, 12)
+    
+    fig, ax_map = plt.subplots(1, 1, figsize=figsize,
             subplot_kw={'projection':stamen_terrain.crs})
     
     if extents is None:
-        extents = [-127.5, -100, 40, 51]
+        extents = [-127.5, -100, 28, 51]
     
     ax_map.set_extent(extents, crs=ccrs.Geodetic())
         
@@ -417,7 +421,7 @@ def plot_map(lats, lons, data=None, label_points=False, colormap=None, title=Non
             cmap=colormap,
             edgecolors='black',
             linewidths=1.5,
-            transform=ccrs.Geodetic(),
+            transform=ccrs.PlateCarree(),
             zorder=10,
         )
         plt.colorbar(sc, orientation='horizontal', fraction=0.06, label=colorbar_label)
@@ -425,7 +429,7 @@ def plot_map(lats, lons, data=None, label_points=False, colormap=None, title=Non
         ax_map.scatter(
             lons, 
             lats, 
-            transform=ccrs.Geodetic(), 
+            transform=ccrs.PlateCarree(), 
             edgecolors='black',
             linewidths=1.5,
             color='white',

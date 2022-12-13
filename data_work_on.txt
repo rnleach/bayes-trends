@@ -3377,51 +3377,7 @@ U             0
 
 
 Counts of skipped stations in the data.
-keph  112 years of data covering 80 years from 1942-01-01 08:00:00 to 2022-01-01 23:53:00
 konp  89 years of data covering 71 years from 1949-08-01 08:00:00 to 2021-01-01 23:55:00
-kpsc  87 years of data covering 77 years from 1945-04-01 08:00:00 to 2022-01-01 23:53:00
-kpuw  86 years of data covering 49 years from 1973-01-01 00:00:00 to 2022-01-01 23:53:00
-kctb  78 years of data covering 79 years from 1942-12-01 07:00:00 to 2022-01-01 23:56:00
-kgfa  75 years of data covering 79 years from 1942-12-01 07:00:00 to 2022-01-01 23:58:00
-kmuo  74 years of data covering 77 years from 1943-07-07 07:00:00 to 2021-01-01 23:58:00
-kcod  71 years of data covering 49 years from 1973-01-01 13:00:00 to 2022-01-01 23:56:00
-kpae  71 years of data covering 79 years from 1942-01-03 22:00:00 to 2021-01-01 23:53:00
-kbfi  70 years of data covering 77 years from 1943-10-01 08:00:00 to 2021-01-01 23:53:00
-ksvc  68 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:55:00
-kpwt  67 years of data covering 48 years from 1973-01-01 00:00:00 to 2021-01-01 23:56:00
-keln  66 years of data covering 74 years from 1948-06-01 08:00:00 to 2022-01-01 23:53:00
-komk  65 years of data covering 49 years from 1973-01-01 00:00:00 to 2022-01-01 23:53:00
-kdew  65 years of data covering 49 years from 1973-01-01 00:00:00 to 2022-01-01 23:53:00
-ksrr  63 years of data covering 32 years from 1990-01-01 15:00:00 to 2022-01-01 23:55:00
-kalm  62 years of data covering 30 years from 1992-01-20 20:00:00 to 2022-01-01 23:55:00
-klru  62 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:55:00
-kats  61 years of data covering 23 years from 1999-01-14 17:51:00 to 2022-01-01 23:55:00
-kcvo  60 years of data covering 78 years from 1943-04-21 12:00:00 to 2021-01-01 23:56:00
-ksmn  59 years of data covering 46 years from 1976-03-05 14:00:00 to 2022-01-01 23:56:00
-kcvn  59 years of data covering 32 years from 1990-01-16 21:00:00 to 2022-01-01 23:56:00
-kguc  58 years of data covering 32 years from 1990-01-01 13:00:00 to 2022-01-01 23:56:00
-kgdv  57 years of data covering 49 years from 1973-01-01 18:00:00 to 2022-01-01 23:56:00
-kcgz  57 years of data covering 30 years from 1992-04-14 23:00:00 to 2022-01-01 23:56:00
-kmrf  56 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:56:00
-klkv  56 years of data covering 29 years from 1991-08-29 06:00:00 to 2021-01-01 23:53:00
-ksgu  56 years of data covering 32 years from 1990-05-10 18:00:00 to 2022-01-01 23:56:00
-kbok  55 years of data covering 48 years from 1973-01-01 00:00:00 to 2021-01-01 23:56:00
-kptv  55 years of data covering 30 years from 1992-01-29 09:00:00 to 2021-12-22 18:56:00
-ktex  55 years of data covering 32 years from 1990-01-12 16:00:00 to 2022-01-01 23:55:00
-kjac  55 years of data covering 48 years from 1973-01-01 13:00:00 to 2021-01-01 23:56:00
-ksow  54 years of data covering 32 years from 1990-01-01 15:00:00 to 2022-01-01 23:55:00
-klpc  54 years of data covering 30 years from 1992-04-09 10:00:00 to 2022-01-01 23:56:00
-klam  53 years of data covering 32 years from 1990-01-01 01:00:00 to 2022-01-01 23:55:00
-keul  53 years of data covering 29 years from 1992-04-09 21:00:00 to 2021-01-01 23:56:00
-kbpi  50 years of data covering 43 years from 1978-03-10 18:00:00 to 2021-01-01 23:53:00
-krbg  50 years of data covering 73 years from 1948-01-01 08:00:00 to 2021-01-01 23:53:00
-kcdr  50 years of data covering 73 years from 1948-01-01 07:00:00 to 2021-01-01 23:53:00
-kpvu  49 years of data covering 32 years from 1990-01-01 13:54:00 to 2022-01-01 23:56:00
-khms  49 years of data covering 40 years from 1973-01-01 00:00:00 to 2013-03-26 20:50:00
-kttd  49 years of data covering 73 years from 1948-01-01 09:00:00 to 2021-01-01 23:53:00
-ksdb  48 years of data covering 32 years from 1990-01-01 00:00:00 to 2021-12-31 04:36:00
-kege  48 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:56:00
-ktrk  47 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:45:00
 kwrl  46 years of data covering 48 years from 1973-01-01 00:00:00 to 2021-01-01 23:53:00
 kaia  43 years of data covering 78 years from 1942-11-22 07:00:00 to 2021-01-01 23:53:00
 kmyl  43 years of data covering 38 years from 1983-11-03 23:00:00 to 2022-01-01 23:51:00
@@ -3513,7 +3469,6 @@ kvel  30 years of data covering 32 years from 1990-01-01 15:00:00 to 2022-01-01 
 kolf  30 years of data covering 49 years from 1973-04-19 18:00:00 to 2022-01-01 23:53:00
 klvs  30 years of data covering 32 years from 1990-01-01 00:00:00 to 2022-01-01 23:53:00
 kapc  30 years of data covering 32 years from 1990-01-03 01:00:00 to 2022-01-01 23:54:00
-kfhu  30 years of data covering 32 years from 1990-01-02 13:00:00 to 2022-01-01 23:58:00
 
 
 Stations not configured or skipped.
