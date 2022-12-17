@@ -61,6 +61,44 @@ def get_monthly_average_vpd_all_sites(archive, months, starting=None, ending=Non
     return
 
 
+def get_hourly_vpd_fill_missing(archive, site, starting=None, ending=None):
+    """Get an hourly time series of vapor pressure deficit with missing hours filled with NaNs.
+
+    # Arguments
+    archive - an archive from which to retrieve the data.
+    site - the site id, e.g. 'kmso', 'smtm8'.
+    starting - when to start the time series.
+    end - when to end the time series.
+
+    # Returns
+    A generator that yields tuples of (hour since starting, vpd).
+    """
+    data_gen = archive.get_hourly_vpd_data_for(site, starting, ending)
+
+    # Initialize the first time step and the accumulator variables
+    try:
+        site_ , vt_prev, vpd_prev, lat_prev_, lon_prev_, elev_prev_, num_matching_ = next(data_gen)
+    except StopIteration:
+        return 
+
+    if starting is None:
+        starting = vt_prev
+    
+    for site_, vt, vpd, lat_, lon_, elev_, num_matching_ in data_gen:
+        total_hours = (vt_prev - starting).total_seconds() // 3600
+        yield (total_hours, vpd_prev)
+
+        while (vt - vt_prev).total_seconds() > 3600:
+            vt_prev += timedelta(hours=1)
+            total_hours += 1
+            yield (total_hours, float("nan"))
+
+        vt_prev, vpd_prev = vt, vpd
+
+    yield (total_hours + 1, vpd_prev)
+
+    return
+
 def get_monthly_average_vpd(archive, site, months, starting=None, ending=None, break_hour=6):
     """Get the monthly average vapor pressure deficit.
 
@@ -287,23 +325,43 @@ def get_annual_hours_avg_max_vpd(archive, site, hours=1000, starting=None, endin
 class Normalization:
     '''A collection of data and functions related to normalizing a variable.'''
 
-    def __init__(self, shift, scale):
+    def __init__(self, shift, scale, norm_func=None, denorm_func=None):
         
         self.shift = shift
         self.scale = scale
+        self.norm_func = norm_func
+        self.denorm_func = denorm_func
 
     def denorm_scale(self, x):
-        return x * self.scale
+        val = x * self.scale
+        if self.denorm_func is not None:
+            return self.denorm_func(val)
+        else:
+            return val
 
     def denorm(self, x):
-        return x * self.scale + self.shift
+        val = x * self.scale + self.shift
+        if self.denorm_func is not None:
+            return self.denorm_func(val)
+        else:
+            return val
+        
 
     def norm(self, x):
-        return (x - self.shift) / self.scale
+        val = (x - self.shift) / self.scale
+        if self.norm_func is not None:
+            return self.norm_func(val)
+        else:
+            return val
+        
 
     @staticmethod
     def denorm_slope(x_norm, y_norm, slope):
-        return y_norm.denorm_scale(slope) / x_norm.denorm_scale(1.0)
+        val = y_norm.denorm_scale(slope) / x_norm.denorm_scale(1.0)
+        if self.denorm_func is not None:
+            return self.denorm_func(val)
+        else:
+            return val
 
 
 def normalize_var(df, input_col, output_col):
@@ -325,6 +383,27 @@ def normalize_var(df, input_col, output_col):
     
     return Normalization(offset, scale)
 
+def log_normalize_var(df, input_col, output_col):
+    """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
+
+    Normalize means subtract the mean and then divide by the standard deviation. In this case, it 
+    also means to take the logarithm first.
+
+    # Arguments
+    df - the Pandas DataFrame
+    input_col - The name of the column in df to be normalized.
+    output_col - The name of the column to add back to the DataFrame df with the normalized data.
+
+    # Returns a Normalization object.
+    """
+    logged = np.log(df[input_col])
+    offset = logged.mean()
+    scale = logged.std()
+    
+    df[output_col] = (logged - offset) / scale
+    
+    return Normalization(offset, scale, np.exp)
+
 def scale_var(df, input_col, output_col):
     """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
 
@@ -343,6 +422,26 @@ def scale_var(df, input_col, output_col):
     df[output_col] = df[input_col] / scale
     
     return Normalization(offset, scale)
+
+def shift_and_scale_var(df, input_col, output_col, shift, scale):
+    """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
+
+    This function creates a normalization that subtracts the provided offset and then divides by
+    the provided scale.
+
+    # Arguments
+    df - the Pandas DataFrame
+    input_col - The name of the column in df to be normalized.
+    output_col - The name of the column to add back to the DataFrame df with the normalized data.
+    shift - the value to shift the column by.
+    scale - the value to scale the column by.
+
+    # Returns a Normalization object.
+    """
+    df[output_col] = (df[input_col] - shift) / scale
+    
+    return Normalization(shift, scale)
+
 
 def save_project_data(file_name, data_dictionary):
     '''Save the data to disk.

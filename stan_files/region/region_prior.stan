@@ -12,7 +12,7 @@ functions {
 }
 data {
   int<lower=0> N;                   // Length of the input data, number of points.
-  array[N] real year;               // The year, normalized to mean=0 and std=1
+  array[N] real year;               // The year, normalized to offset 1990 and scale 30 years.
 }
 generated quantities {
   // Hyper priors - make them broad enough to be learned from the data.

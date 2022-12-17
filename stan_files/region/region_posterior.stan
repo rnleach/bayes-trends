@@ -13,7 +13,7 @@ functions {
 data {
   int<lower=1> N;                       // Length of the input data.
   int<lower=1> K;                       // The number of sites in the data set.
-  array[N] real year;                   // The year, normalized to mean=0 and std=1
+  array[N] real year;                   // The year, normalized to offset 1990 and scale 30 years.
   array[N] int<lower=0, upper=K> site;  // Integer code to ID site.
   array[N] real<lower=0> vpd;           // The scaled (proportional to mean) vapor pressure deficit.
 }
