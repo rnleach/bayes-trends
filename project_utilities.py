@@ -325,43 +325,27 @@ def get_annual_hours_avg_max_vpd(archive, site, hours=1000, starting=None, endin
 class Normalization:
     '''A collection of data and functions related to normalizing a variable.'''
 
-    def __init__(self, shift, scale, norm_func=None, denorm_func=None):
+    def __init__(self, shift, scale):
         
         self.shift = shift
         self.scale = scale
-        self.norm_func = norm_func
-        self.denorm_func = denorm_func
+
+        return
 
     def denorm_scale(self, x):
-        val = x * self.scale
-        if self.denorm_func is not None:
-            return self.denorm_func(val)
-        else:
-            return val
+        return x * self.scale
 
     def denorm(self, x):
-        val = x * self.scale + self.shift
-        if self.denorm_func is not None:
-            return self.denorm_func(val)
-        else:
-            return val
+        return x * self.scale + self.shift
         
 
     def norm(self, x):
-        val = (x - self.shift) / self.scale
-        if self.norm_func is not None:
-            return self.norm_func(val)
-        else:
-            return val
+        return (x - self.shift) / self.scale
         
 
     @staticmethod
     def denorm_slope(x_norm, y_norm, slope):
-        val = y_norm.denorm_scale(slope) / x_norm.denorm_scale(1.0)
-        if self.denorm_func is not None:
-            return self.denorm_func(val)
-        else:
-            return val
+        return y_norm.denorm_scale(slope) / x_norm.denorm_scale(1.0)
 
 
 def normalize_var(df, input_col, output_col):
@@ -382,27 +366,6 @@ def normalize_var(df, input_col, output_col):
     df[output_col] = (df[input_col] - offset) / scale
     
     return Normalization(offset, scale)
-
-def log_normalize_var(df, input_col, output_col):
-    """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
-
-    Normalize means subtract the mean and then divide by the standard deviation. In this case, it 
-    also means to take the logarithm first.
-
-    # Arguments
-    df - the Pandas DataFrame
-    input_col - The name of the column in df to be normalized.
-    output_col - The name of the column to add back to the DataFrame df with the normalized data.
-
-    # Returns a Normalization object.
-    """
-    logged = np.log(df[input_col])
-    offset = logged.mean()
-    scale = logged.std()
-    
-    df[output_col] = (logged - offset) / scale
-    
-    return Normalization(offset, scale, np.exp)
 
 def scale_var(df, input_col, output_col):
     """Normalize a Pandas DataFrame column and add it back into the DataFrame as a new column.
