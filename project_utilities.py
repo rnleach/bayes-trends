@@ -18,6 +18,19 @@ from watermark import watermark
 print(f"Import versions for libraries imported by {__name__}")
 print(watermark(iversions=True, globals_=globals()))
 
+def get_coords_for_sites(archive, sites):
+    """Given a list of sites, get the lat, lon, and elevation information to go with it."""
+    results = []
+    for site in sites:
+        loc = archive.get_location_info_for_site(site)
+        if loc is None:
+            raise Exception(f"This site did not come from the archive {site}.")
+        lat, lon, elev = loc
+        results.append((site, lat, lon, elev))
+
+    return tuple(results)
+
+
 def get_monthly_average_vpd_all_sites(archive, months, starting=None, ending=None, break_hour=6):
     """Get the monthly average vapor pressure deficit for all sites.
 
@@ -193,7 +206,7 @@ def get_monthly_average_vpd(archive, site, months, starting=None, ending=None, b
 
     return results
 
-def get_annual_hours_avg_max_vpd_all_sites(archive, hours=1000, starting=None, ending=None, break_hour=6):
+def get_annual_hours_avg_max_vpd_all_sites(archive, starting, ending, hours=1000, break_hour=6):
     """Get the annual maximum 'hours' average VPD for all sites.
 
     Averaging is done on the hourly observations.
@@ -214,6 +227,8 @@ def get_annual_hours_avg_max_vpd_all_sites(archive, hours=1000, starting=None, e
     """
     sites = archive.get_all_sites()
 
+    end_year = int(ending.year)
+
     for site in sites:
 
         data = get_annual_hours_avg_max_vpd(archive, site, hours, starting, ending, break_hour)
@@ -230,8 +245,21 @@ def get_annual_hours_avg_max_vpd_all_sites(archive, hours=1000, starting=None, e
             print(f"Skipping {site} because it only covers {yearx - year0} years.")
             continue
 
-        for lat, lon, elev, year, vpd in data:
-            yield (site, lat, lon, elev, year, vpd)
+        curr_year = int(starting.year)
+
+        for lat_, lon_, elev_, year, vpd in data:
+
+            while curr_year < int(year):
+                yield (site, curr_year, float("nan"))
+                curr_year += 1
+
+            yield (site, year, vpd)
+
+            curr_year += 1
+
+        while curr_year < end_year:
+            yield(site, curr_year, float("nan"))
+            curr_year += 1
 
     return
 
@@ -551,29 +579,34 @@ def station_correlation(dataframe, station1, station2):
     return np.corrcoef(xs, ys)[0][1]
 
 
-def plot_station_correlation(dataframe, station1, station2, x_denorm, y_denorm, title=None):
+def plot_station_correlation(df, station1, station2, x_denorm, y_denorm, title=None):
     '''Make plots to show how two stations correlate with each other.'''
 
-    fig, (ax_ts, ax_corr) = plt.subplots(2, 1, figsize=(9, 9))
+    dataframe = df.dropna()
+
+    fig, ((ax_ts, ax_corr), (ax_ts_log, ax_corr_log)) = plt.subplots(2, 2, figsize=(12, 9))
     
     if title is not None:
         fig.suptitle(title)
     
-    # The time series plot
-    ax_ts.scatter(x_denorm(dataframe.loc[dataframe['site']==station1]['x_obs']), 
-                   y_denorm(dataframe.loc[dataframe['site']==station1]['y_vpd_obs']), 
-                   alpha=0.6,
-                   label=station1)
-    
-    ax_ts.scatter(x_denorm(dataframe.loc[dataframe['site']==station2]['x_obs']), 
-                       y_denorm(dataframe.loc[dataframe['site']==station2]['y_vpd_obs']), 
-                       alpha=0.6,
-                       label=station2)
-    
+    xs1 = dataframe.loc[dataframe['site']==station1]['x_obs']
+    ys1 = dataframe.loc[dataframe['site']==station1]['y_vpd_obs']
+
+    xs2 = dataframe.loc[dataframe['site']==station2]['x_obs']
+    ys2 = dataframe.loc[dataframe['site']==station2]['y_vpd_obs']
+
+    # The time series plots
+    ax_ts.scatter(x_denorm(xs1), y_denorm(ys1), alpha=0.6, label=station1)
+    ax_ts.scatter(x_denorm(xs2), y_denorm(ys2), alpha=0.6, label=station2)
     ax_ts.set_ylabel('Vapor Pressure\nDeficit (hPa)')
     ax_ts.legend()
-
     ax_ts.set_xlabel('Year')
+    
+    ax_ts_log.scatter(xs1, np.log(ys1), alpha=0.6, label=station1)
+    ax_ts_log.scatter(xs2, np.log(ys2), alpha=0.6, label=station2)
+    ax_ts_log.set_ylabel('Log Normalized VPD')
+    ax_ts_log.legend()
+    ax_ts_log.set_xlabel('Year')
     
     # The correllation plot
     xs, ys, _ = common_cases(dataframe, station1, station2)
@@ -588,8 +621,19 @@ def plot_station_correlation(dataframe, station1, station2, x_denorm, y_denorm, 
     ax_corr.set_ylabel(f"{station2} Vapor Pressure Deficit (hPa)")
    
     ax_corr.annotate(f"Corr: {np.corrcoef(xs, ys)[0][1]:.3f}", (min_val, max_val))
-    ax_corr.annotate(f"Elevations:\n{station1} {group_a.iloc[0]['elev']:.1f}m\n{station2} {group_b.iloc[0]['elev']:.1f}m",
-                     (max_val-2, min_val) )
+
+    ax_corr_log.plot(
+            [np.log(min_val)-1, np.log(max_val)+1],
+            [np.log(min_val)-1, np.log(max_val)+1],
+            color='black')
+    ax_corr_log.scatter(np.log(xs), np.log(ys))
+    
+    ax_corr_log.set_xlabel(f"{station1} Log Normalized VPD")
+    ax_corr_log.set_ylabel(f"{station2} Log Normalized VPD")
+   
+    ax_corr_log.annotate(f"Corr: {np.corrcoef(np.log(xs), np.log(ys))[0][1]:.3f}",
+            (np.log(min_val), np.log(max_val)))
+
 
     plt.show()
     

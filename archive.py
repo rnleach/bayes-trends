@@ -391,7 +391,7 @@ class Archive:
         return num_rows
 
 
-    def __get_location_info_for_site(self, site):
+    def get_location_info_for_site(self, site):
         '''Get the site_id, average latitude, longitude, and elevation for a site.'''
 
         count = 0
@@ -447,7 +447,7 @@ class Archive:
         assert site is not None
         site = site.lower()
 
-        avg_coords = self.__get_location_info_for_site(site)
+        avg_coords = self.get_location_info_for_site(site)
         assert avg_coords is not None
         latitude, longitude, elevation = avg_coords
 
@@ -626,7 +626,7 @@ class Archive:
         assert site is not None
         site = site.lower()
 
-        avg_coords = self.__get_location_info_for_site(site)
+        avg_coords = self.get_location_info_for_site(site)
         assert avg_coords is not None
         latitude, longitude, elevation = avg_coords
 
