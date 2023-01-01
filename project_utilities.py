@@ -513,6 +513,44 @@ def plot_map(lats, lons, data=None, label_points=False, colormap=None, title=Non
     return
 
 
+def haversine_distance(lon1, lat1, lon2, lat2):
+    """Calculate the great circle distance between two points."""
+
+    lon1, lat1, lon2, lat2 = map(np.radians, [lon1, lat1, lon2, lat2])
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = np.sin(dlat/2.0)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2.0)**2
+
+    c = 2 * np.arcsin(np.sqrt(a))
+    km = 6367.4445 * c
+    return km
+
+def common_cases(dataframe, station1, station2):
+    """Return VPD from the 2 stations only for the years they have in common."""
+    group_a = dataframe.loc[dataframe['site']==station1]
+    group_b = dataframe.loc[dataframe['site']==station2]
+    joint_years = set(group_a['year']) & set(group_b['year'])
+
+    xs = []
+    ys = []
+    years = []
+    
+    for row in joint_years:
+        years.append(row)
+        xs.append((group_a.loc[group_a['year'] == row])['avg_vpd'].iloc[0])
+        ys.append((group_b.loc[group_b['year'] == row])['avg_vpd'].iloc[0])
+
+    return (xs, ys, years)
+
+
+def station_correlation(dataframe, station1, station2):
+    """Calculate the correlation between the values at 2 stations."""
+    xs, ys, _ = common_cases(dataframe, station1, station2)
+    return np.corrcoef(xs, ys)[0][1]
+
+
 def plot_station_correlation(dataframe, station1, station2, x_denorm, y_denorm, title=None):
     '''Make plots to show how two stations correlate with each other.'''
 
@@ -538,16 +576,7 @@ def plot_station_correlation(dataframe, station1, station2, x_denorm, y_denorm, 
     ax_ts.set_xlabel('Year')
     
     # The correllation plot
-    group_a = dataframe.loc[dataframe['site']==station1]
-    group_b = dataframe.loc[dataframe['site']==station2]
-    joint_years = set(group_a['year']) & set(group_b['year'])
-
-    xs = []
-    ys = []
-    
-    for row in joint_years:
-        xs.append((group_a.loc[group_a['year'] == row])['avg_vpd'].iloc[0])
-        ys.append((group_b.loc[group_b['year'] == row])['avg_vpd'].iloc[0])
+    xs, ys, _ = common_cases(dataframe, station1, station2)
 
     max_val = max(max(xs), max(ys))
     min_val = min(min(xs), min(ys))
