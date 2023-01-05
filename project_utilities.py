@@ -573,10 +573,63 @@ def common_cases(dataframe, station1, station2):
     return (xs, ys, years)
 
 
-def station_correlation(dataframe, station1, station2):
+def station_corr_cov(dataframe, station1, station2):
     """Calculate the correlation between the values at 2 stations."""
     xs, ys, _ = common_cases(dataframe, station1, station2)
-    return np.corrcoef(xs, ys)[0][1]
+    cor = np.corrcoef(xs, ys)[0][1]
+    cov = np.cov(xs, ys)[0][1]
+    
+    return (cor, cov)
+
+def distance_elevation_corr_cov_relationships(site_coords, df):
+    num_sites = len(site_coords)
+
+    dff = df.dropna()
+
+    distance_matrix = np.zeros((num_sites, num_sites))
+    elevation_matrix = np.zeros((num_sites, num_sites))
+
+    distances = []
+    elevations = []
+    corrs = []
+    covs = []
+
+    for i in range(num_sites):
+
+        station1 = site_coords.iloc[i]['site']
+        lat1 = site_coords.iloc[i]['lat']
+        lon1 = site_coords.iloc[i]['lon']
+        elev1 = site_coords.iloc[i]['elev']
+
+        for j in range(i, num_sites):
+
+            station2 = site_coords.iloc[j]['site']
+            lat2 = site_coords.iloc[j]['lat']
+            lon2 = site_coords.iloc[j]['lon']
+            elev2 = site_coords.iloc[j]['elev']
+
+            corr, cov = station_corr_cov(dff, station1, station2)
+
+            corrs.append(corr)
+            covs.append(cov)
+
+            if i == j:
+                distance = 0.0
+                elev_diff = 0.0
+            else:
+                distance = haversine_distance(lon1, lat1, lon2, lat2)
+                elev_diff = abs(elev2 - elev1)
+
+            distance_matrix[i, j] = distance
+            distance_matrix[j, i] = distance
+
+            elevation_matrix[i, j] = elev_diff
+            elevation_matrix[j, i] = elev_diff
+
+            distances.append(distance)
+            elevations.append(elev_diff)
+            
+    return (distance_matrix, elevation_matrix, distances, elevations, corrs, covs)
 
 
 def plot_station_correlation(df, station1, station2, x_denorm, y_denorm, title=None):
