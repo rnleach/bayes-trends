@@ -22,19 +22,44 @@ functions {
     return index;
   }
   
-  matrix cov_GPL2(matrix dist, matrix elev_diff, real sq_alpha, real sq_rho_d, real sq_rho_e, real delta) {
+  matrix cov_GPL2(matrix dist, matrix elev_diff, real alpha, real rho_d, real rho_e, real delta) {
       int N = dims(dist)[1];
+      real sq_alpha = square(alpha);
+
       matrix[N, N] K;
       for (i in 1:(N-1)) {
         K[i, i] = sq_alpha + delta;
         for (j in (i + 1):N) {
-          K[i, j] = sq_alpha * exp(-(sq_rho_d * square(dist[i,j]) + sq_rho_e * square(elev_diff[i,j])));
+          K[i, j] = sq_alpha * exp(-(square(dist[i,j] / rho_d) + square(elev_diff[i,j] / rho_e)));
           K[j, i] = K[i, j];
         }
       }
       K[N, N] = sq_alpha + delta;
       return K;
     }
+
+  vector cov_to_sigma(matrix cov) {
+    int K = dims(cov)[1];
+    vector[K] sigma;
+
+    for(k in 1:K) {
+      sigma[k] = sqrt(cov[k, k]);
+    }
+
+    return sigma;
+  }
+
+  matrix cov_to_corr(matrix cov, vector sigma) {
+    int K = dims(cov)[1];
+    matrix[K, K] corr;
+    for(i in 1:K) {
+      for(j in 1:K) {
+        corr[i, j] = cov[i, j] / (sigma[i] * sigma[j]);
+      }
+    }
+
+    return corr;
+  }
 }
 data {
   int<lower=1> K;                       // The number of sites in the data set.
@@ -60,6 +85,8 @@ transformed data {
   int<lower=1900, upper=2023> max_year = max(year);
   int num_years_int = max_year - min_year + 1;
   // real num_years= num_years_int;
+  
+  if( NY * K != N) reject("Please provide missing data with NaN values.");
 }
 parameters {
   array[K] real a;                      // per site intercept
@@ -67,9 +94,9 @@ parameters {
   real a_mu;                            // all sites intercept mean 
   real<lower=0> a_sigma;                // all sites intercept variability
 
-  real<lower=0> etasq;                  // Maximum covariance from Gaussian Mixture
-  real<lower=0> rhosq_d;                // Length (distance) scale for Gaussian
-  real<lower=0> rhosq_e;                // Length (elevation differnce) scale for Gaussian
+  real<lower=0> eta;                    // Maximum covariance from Gaussian Mixture
+  real<lower=0> rho_d;                  // Length (distance) scale for Gaussian
+  real<lower=0> rho_e;                  // Length (elevation differnce) scale for Gaussian
 
   vector[M] missing_vals;               // The missing values to be imputed.
 
@@ -78,7 +105,7 @@ transformed parameters {
   matrix[K, K] L_SIGMA;
   matrix[K, K] SIGMA;
 
-  SIGMA = cov_GPL2(dist_matrix, elev_matrix, etasq, rhosq_d, rhosq_e, 0.01);
+  SIGMA = cov_GPL2(dist_matrix, elev_matrix, eta, rho_d, rho_e, 0.01);
   L_SIGMA = cholesky_decompose(SIGMA);
 }
 model {
@@ -88,9 +115,9 @@ model {
   a_sigma ~ exponential(2.0);
 
   // Set the hyper-priors for the covariance matrix.
-  etasq ~ exponential(1);
-  rhosq_d ~ exponential(100);
-  rhosq_e ~ exponential(10);
+  eta ~ exponential(1);
+  rho_d ~ exponential(1.0 / 1000);
+  rho_e ~ exponential(1.0 / 1000);
 
   // Set the priors for each site and model the correlation between them.
   a ~ normal(a_mu, a_sigma);
@@ -149,6 +176,12 @@ generated quantities {
     }
 
   }
+
+  vector[K] sigma;
+  matrix[K, K] corr;
+
+  sigma = cov_to_sigma(SIGMA);
+  corr = cov_to_corr(SIGMA, sigma);
 }
 
 /*
