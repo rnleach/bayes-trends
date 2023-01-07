@@ -257,7 +257,7 @@ def get_annual_hours_avg_max_vpd_all_sites(archive, starting, ending, hours=1000
 
             curr_year += 1
 
-        while curr_year < end_year:
+        while curr_year <= end_year:
             yield(site, curr_year, float("nan"))
             curr_year += 1
 
